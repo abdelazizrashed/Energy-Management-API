@@ -8,18 +8,26 @@ from .routes import register_routes
 from .shared.db import db
 
 
-def create_app():
+def create_app(env = None):
+    from app.config import config_by_name
     app = Flask(__name__)
+    app.config.from_object(config_by_name[env or "test"])
     CORS(app)
 
     api = Api(app)
-    register_routes(api, app);
+    register_routes(api);
 
     jwt = JWTManager(app)
 
     db.app = app
     db.init_app(app)
     db.create_all()
+
+    
+
+    @app.route("/health")
+    def healthy():
+        return jsonify("healthy")
 
     #TODO: add auth and jwt
 

@@ -10,6 +10,7 @@ _source_parser = reqparse.RequestParser()
 _source_parser.add_argument("source_id", type=int)
 _source_parser.add_argument("name", type=str)
 
+
 class EnergySourceResource(Resource):
     def get(self):
         source_args = _source_parser.parse_args()
@@ -27,7 +28,7 @@ class EnergySourceResource(Resource):
         if not name:
             return getFailedResponse([], "name is required"), 400
         source = EnergySourceModel(None, name)
-        source =  EnergySourceServices.create(source)
+        source = EnergySourceServices.create(source)
         return getSuccessResponse(source.to_json(), "Success"), 200
 
     def put(self):
@@ -40,11 +41,11 @@ class EnergySourceResource(Resource):
         if not name:
             return getFailedResponse([], "name is required"), 400
         source = EnergySourceModel(source_id, name)
-        source =  EnergySourceServices.update(source)
+        source = EnergySourceServices.update(source)
         return getSuccessResponse(source.to_json(), "Success"), 200
 
     def delete(self):
-        
+
         args = _source_parser.parse_args()
         source_id = args["source_id"]
         if not source_id:
@@ -53,5 +54,12 @@ class EnergySourceResource(Resource):
         return getSuccessResponse(source_id, "Success"), 200
 
 
-    
+class EnergySourcesResource(Resource):
+    def get(self):
+        sources = EnergySourceServices.retrieve_all()
+        data = []
+        for source in sources:
+            data.append(source.to_json())
+        print(data)
 
+        return getSuccessResponse(data, "Success"), 200

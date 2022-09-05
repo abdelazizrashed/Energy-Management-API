@@ -2,12 +2,12 @@ from ..shared.db import db
 
 
 class EnergySourceModel(db.Model):
-    __tablename__ = "EnergySource"
+    __tablename__ = "EnergySources"
 
     # region SQLAlchemy table columns
 
     source_id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(100))
+    name = db.Column(db.String(50), nullable=False)
 
     # endregion
 

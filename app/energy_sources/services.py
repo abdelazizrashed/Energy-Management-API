@@ -17,20 +17,22 @@ class EnergySourceServices:
             return EnergySourceServices.create(source)
         
         db.session.commit()
-        pass
+        return source
+        
 
     @staticmethod 
     def retrieve(source_id: int) -> EnergySourceModel:
-        return EnergySourceModel.query.filter_by(source_id==source_id).first()
+        return EnergySourceModel.query.filter_by(source_id=source_id).first()
 
 
     @staticmethod 
     def retrieve_all()-> list[EnergySourceModel]:
-        return EnergySourceModel.query.all();
+        return EnergySourceModel.query.all()
 
     @staticmethod
     def delete(source: EnergySourceModel) :
-        if  EnergySourceServices.retrieve(source.source_id):
-            db.session.delete(source)
+        temp =   EnergySourceServices.retrieve(source.source_id)
+        if temp:
+            db.session.delete(temp)
             db.session.commit()
             
