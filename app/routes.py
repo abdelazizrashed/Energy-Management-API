@@ -11,6 +11,9 @@ def register_routes(api,):
     from .energy_seu import register_routes as attach_energy_seu
     from .energy_consumtion_per_month import register_routes as attach_monthly_consumtion
     from .annual_trends import register_routes as attach_annual_trends
+    from .heat_users_seu import register_routes as attach_heat_users
+    from .lighting import register_routes as attach_lighting
+
 
     attach_energy_sources(api)
     attach_energy_units(api)
@@ -18,6 +21,9 @@ def register_routes(api,):
     attach_energy_seu(api)
     attach_monthly_consumtion(api)
     attach_annual_trends(api)
+    attach_heat_users(api)
+    attach_lighting(api)
+
     # attach_events(app, api)
     # attach_reminders(app, api)
     # attach_shared(app, api)

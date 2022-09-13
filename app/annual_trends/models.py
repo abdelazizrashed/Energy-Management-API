@@ -11,8 +11,8 @@ class AnnualTrendsModel(db.Model):
     source_id = db.Column(db.Integer, db.ForeignKey(
         f'{EnergySourceModel.__tablename__}.source_id'), nullable=False)
     type = db.Column(db.String(), db.ForeignKey(
-        f'{EnergySourceModel.__tablename__}.type'), nullable=False)
-    date = db.Column(db.String(), nullable=False)
+        f'{EnergySEUModel.__tablename__}.type'), nullable=False)
+    date = db.Column(db.String(), nullable=False, primary_key=True)
     consumption = db.Column(db.Numeric(), nullable=False)
     cost = db.Column(db.Numeric(), nullable=False)
     unit_price = db.Column(db.Numeric(), nullable=False)
