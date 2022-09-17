@@ -23,7 +23,7 @@ _unit_parser.add_argument("source_id", type=int)
 
 class MonthlyEnergyConsumtionResource(Resource):
     def get(self):
-        unit_args = _unit_parser.parse_args()
+        unit_args = request.args
         month = unit_args["month"]
         if not month:
             return getFailedResponse([], "month is required"), 400
