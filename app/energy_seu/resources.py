@@ -63,13 +63,13 @@ class EnergySEUResource(Resource):
     def put(self):
 
         args = _source_parser.parse_args()
-        type = args["type"]
-        main_driver = args["main_driver"]
-        meter_type = args["meter_type"]
-        source_id = args["source_id"]
-        objective = args["objective"]
-        influencer = args["influencer"]
-        target = args["target"]
+        type = args.get("type")
+        main_driver = args.get("main_driver")
+        meter_type = args.get("meter_type")
+        source_id = args.get("source_id")
+        objective = args.get("objective")
+        influencer = args.get("influencer")
+        target = args.get("target")
         if not type:
             return getFailedResponse([], "type is required"), 400
         if not main_driver:
