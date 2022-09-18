@@ -55,6 +55,10 @@ class MonthlyEnergyConsumtionResource(Resource):
         source_id = args["source_id"]
         if not source_id:
             return getFailedResponse([], "source_id is required"), 400
+        m = MonthlyEnergyConsumtionServices.retrieve(month, source_id)
+        if m: 
+            return getFailedResponse([], "element already exists is required"), 400
+
         unit = MonthlyEnergyConsumtionModel.from_json(args)
         unit = MonthlyEnergyConsumtionServices.create(unit)
         return getSuccessResponse(unit.to_json(), "Success"), 200
