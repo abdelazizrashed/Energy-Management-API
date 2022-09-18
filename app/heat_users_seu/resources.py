@@ -3,6 +3,7 @@ from flask_restful import Resource, reqparse, request
 from ..shared.helpers.api_helpers import getFailedResponse, getSuccessResponse
 from .services import HeatUserServices
 from .models import HeatUserModel
+from ..energy_seu.services import EnergySEUServices
 
 
 _unit_parser = reqparse.RequestParser()
@@ -36,6 +37,13 @@ class HeatUserResource(Resource):
 
     def post(self):
         args = _unit_parser.parse_args()
+        type = args.get("process_type")
+        if not type: 
+            return getFailedResponse([], "process_type is required"), 400
+        seu = EnergySEUServices.retrieve(type)
+        if not seu:
+            return getFailedResponse([], "process_type doesn't exist"), 400
+
         if len(args.items()) == 0:
             return getFailedResponse([], "add some data"), 400
         unit = HeatUserModel.from_json(args)
@@ -47,6 +55,12 @@ class HeatUserResource(Resource):
         id = args["id"]
         if not id:
             return getFailedResponse([], "id is required"), 400
+        type = args.get("process_type")
+        if not type: 
+            return getFailedResponse([], "process_type is required"), 400
+        seu = EnergySEUServices.retrieve(type)
+        if not seu:
+            return getFailedResponse([], "process_type doesn't exist"), 400
             
         if len(args.items()) == 1:
             return getFailedResponse([], "add some data"), 400

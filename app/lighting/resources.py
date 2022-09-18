@@ -30,8 +30,8 @@ _unit_parser.add_argument("month", type=str)
 
 class LightingResource(Resource):
     def get(self):
-        unit_args = _unit_parser.parse_args()
-        id = unit_args["id"]
+        unit_args = request.args
+        id = unit_args.get("id")
         if not id:
             return getFailedResponse([], "id is required"), 400
         unit = LightingServices.retrieve(id)
@@ -41,7 +41,7 @@ class LightingResource(Resource):
 
     def post(self):
         args = _unit_parser.parse_args()
-        if len(args.items) == 0:
+        if len(args.items()) == 0:
             return getFailedResponse([], "add some data"), 400
         unit = LightingModel.from_json(args)
         unit = LightingServices.create(unit)
@@ -54,7 +54,7 @@ class LightingResource(Resource):
         if not id:
             return getFailedResponse([], "id is required"), 400
             
-        if len(args.items) == 1:
+        if len(args.items()) == 1:
             return getFailedResponse([], "add some data"), 400
         unit = LightingModel.from_json(args)
         unit = LightingServices.update(unit)
@@ -62,8 +62,8 @@ class LightingResource(Resource):
 
     def delete(self):
 
-        args = _unit_parser.parse_args()
-        id = args["id"]
+        unit_args = request.args
+        id = unit_args.get("id")
         if not id:
             return getFailedResponse([], "id is required"), 400
         LightingServices.delete(id)
