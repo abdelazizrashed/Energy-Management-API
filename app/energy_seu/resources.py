@@ -18,8 +18,8 @@ _source_parser.add_argument("target", type=float)
 
 class EnergySEUResource(Resource):
     def get(self):
-        source_args = _source_parser.parse_args()
-        source_id = source_args["type"]
+        source_args = request.args
+        source_id = source_args.get("type")
         if not source_id:
             return getFailedResponse([], "type is required"), 400
         source = EnergySEUServices.retrieve(source_id)
