@@ -75,7 +75,7 @@ class EnergySEUResource(Resource):
         objective = args.get("objective")
         influencer = args.get("influencer")
         target = args.get("target")
-        wpa = args.get("wpa")
+        wpa = args.get("wpa") 
         if not type:
             return getFailedResponse([], "type is required"), 400
         if not main_driver:
