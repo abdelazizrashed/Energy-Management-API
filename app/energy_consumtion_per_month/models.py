@@ -7,14 +7,15 @@ from ..energy_units.services import EnergyUnitServices
 class MonthlyEnergyConsumtionModel(db.Model):
     __tablename__ = 'MonthlyEnergyConsumtion'
     
-    month = db.Column(db.String(), primary_key=True,nullable=False)
+    id = db.Column(db.Integer, primary_key=True)
+    month = db.Column(db.String(), nullable=False)
     # type = db.Column(db.String(100), nullable=False,primary_key=True)
     cost = db.Column(db.Integer, nullable=False)
     usage = db.Column(db.Integer, nullable=False)
     unit_id = db.Column(db.Integer, db.ForeignKey(
         f'{EnergyUnitModel.__tablename__}.unit_id'), nullable=False)
     source_id = db.Column(db.Integer, db.ForeignKey(
-        f'{EnergySourceModel.__tablename__}.source_id'),primary_key=True, nullable=False)
+        f'{EnergySourceModel.__tablename__}.source_id'), nullable=False)
 
         
     def __init__(self, month, cost, usage, unit_id, source_id) -> None:
