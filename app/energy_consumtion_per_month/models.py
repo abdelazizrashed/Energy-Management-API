@@ -7,7 +7,7 @@ from ..energy_units.services import EnergyUnitServices
 class MonthlyEnergyConsumtionModel(db.Model):
     __tablename__ = 'MonthlyEnergyConsumtion'
     
-    id = db.Column(db.Integer, primary_key=True)
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     month = db.Column(db.String(), nullable=False)
     # type = db.Column(db.String(100), nullable=False,primary_key=True)
     cost = db.Column(db.Integer, nullable=False)
@@ -18,8 +18,9 @@ class MonthlyEnergyConsumtionModel(db.Model):
         f'{EnergySourceModel.__tablename__}.source_id'), nullable=False)
 
         
-    def __init__(self, month, cost, usage, unit_id, source_id) -> None:
+    def __init__(self, id, month, cost, usage, unit_id, source_id) -> None:
         super().__init__()
+        self.id = id
         self.month= month
         self.cost = cost
         self.usage = usage
@@ -30,6 +31,7 @@ class MonthlyEnergyConsumtionModel(db.Model):
         unit = EnergyUnitServices.retrieve(self.unit_id)
         source = EnergySourceServices.retrieve(self.source_id)
         return {
+            "id": self.id,
             "source": source.to_json(),
             "month": self.month,
             "cost":self.cost,
@@ -40,6 +42,7 @@ class MonthlyEnergyConsumtionModel(db.Model):
     @staticmethod
     def from_json(data: dict):
         return MonthlyEnergyConsumtionModel(
+            data["id"],
             data['month'], 
             data['cost'], 
             data['usage'], 
