@@ -11,8 +11,8 @@ class EnergySEUServices:
         
 
     @staticmethod
-    def retrieve(month: str) ->EnergySEUModel:
-        return EnergySEUModel.query.filter_by(type=month).first()
+    def retrieve(type: str) ->EnergySEUModel:
+        return EnergySEUModel.query.filter_by(type=type).first()
 
     @staticmethod
     def retrieve_all() -> list[EnergySEUModel]:

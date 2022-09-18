@@ -51,6 +51,11 @@ class EnergySEUResource(Resource):
         if not target:
             return getFailedResponse([], "target is required"), 400
         
+        source = EnergySEUServices.retrieve(type)
+        if type:
+            return getFailedResponse([], "SEU already exists"), 400
+
+        
         source = EnergySEUModel.from_json(args)
         source = EnergySEUServices.create(source)
         return getSuccessResponse(source.to_json(), "Success"), 200
