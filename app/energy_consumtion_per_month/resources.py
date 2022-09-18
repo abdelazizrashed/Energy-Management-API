@@ -27,10 +27,10 @@ class MonthlyEnergyConsumtionResource(Resource):
         
         if not unit_args:
             return getFailedResponse([], "month and source_id are required"), 400
-        month = unit_args["month"]
+        month = unit_args.get("month")
         if not month:
             return getFailedResponse([], "month is required"), 400
-        source_id = unit_args["source_id"]
+        source_id = unit_args.get("source_id")
         if not source_id:
             return getFailedResponse([], "source_id is required"), 400
         unit = MonthlyEnergyConsumtionServices.retrieve(month, source_id)
