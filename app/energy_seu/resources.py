@@ -14,6 +14,7 @@ _source_parser.add_argument("source_id", type=int)
 _source_parser.add_argument("objective", type=str)
 _source_parser.add_argument("influencer", type=str)
 _source_parser.add_argument("target", type=float)
+_source_parser.add_argument("wpa", type=float)
 
 
 class EnergySEUResource(Resource):
@@ -36,6 +37,8 @@ class EnergySEUResource(Resource):
         objective = args.get("objective")
         influencer = args.get("influencer")
         target = args.get("target")
+        wpa = args.get("wpa")
+
         if not type:
             return getFailedResponse([], "type is required"), 400
         if not main_driver:
@@ -50,6 +53,8 @@ class EnergySEUResource(Resource):
             return getFailedResponse([], "influencer is required"), 400
         if not target:
             return getFailedResponse([], "target is required"), 400
+        if not wpa:
+            return getFailedResponse([], "wpa is required"), 400
         
         source = EnergySEUServices.retrieve(type)
         if source:
@@ -70,6 +75,7 @@ class EnergySEUResource(Resource):
         objective = args.get("objective")
         influencer = args.get("influencer")
         target = args.get("target")
+        wpa = args.get("wpa")
         if not type:
             return getFailedResponse([], "type is required"), 400
         if not main_driver:
@@ -84,6 +90,8 @@ class EnergySEUResource(Resource):
             return getFailedResponse([], "influencer is required"), 400
         if not target:
             return getFailedResponse([], "target is required"), 400
+        if not wpa:
+            return getFailedResponse([], "wpa is required"), 400
         source = EnergySEUModel.from_json(args)
         source = EnergySEUServices.update(source)
         return getSuccessResponse(source.to_json(), "Success"), 200

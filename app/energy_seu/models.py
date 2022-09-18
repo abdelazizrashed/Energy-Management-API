@@ -15,8 +15,9 @@ class EnergySEUModel(db.Model):
     influencer = db.Column(db.String(150), nullable=False)
     
     target = db.Column(db.Numeric(), nullable=False)
+    wpa = db.Column(db.Numeric(), nullable=False)
 
-    def __init__(self, type, main_driver, meter_type, source_id, objective, influencer, target) -> None:
+    def __init__(self, type, main_driver, meter_type, source_id, objective, influencer, target, wpa) -> None:
         super().__init__()
         self.type = type
         self.main_driver = main_driver
@@ -25,6 +26,7 @@ class EnergySEUModel(db.Model):
         self.objective = objective
         self.influencer = influencer
         self.target = target
+        self.wpa = wpa
 
     def to_json(self) -> dict:
         return {
@@ -35,18 +37,20 @@ class EnergySEUModel(db.Model):
             "objective": self.objective,
             "influencer": self.influencer,
             "target": str(self.target),
+            "wpa": str(self.wpa),
         }
 
     @staticmethod
     def from_json(data: dict):
         return EnergySEUModel(
-            data["type"], 
-            data['main_driver'],
-            data['meter_type'],
-            data['source_id'],
-            data['objective'],
-            data['influencer'],
-            data['target'],
+            data.get("type"), 
+            data.get('main_driver'),
+            data.get('meter_type'),
+            data.get('source_id'),
+            data.get('objective'),
+            data.get('influencer'),
+            data.get('target'),
+            data.get("wpa"),
             )
 
 
