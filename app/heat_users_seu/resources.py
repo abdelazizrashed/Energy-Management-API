@@ -25,8 +25,8 @@ _unit_parser.add_argument("is_yearly", type=bool)
 
 class HeatUserResource(Resource):
     def get(self):
-        unit_args = _unit_parser.parse_args()
-        id = unit_args["id"]
+        unit_args = request.args
+        id = unit_args.get("id")
         if not id:
             return getFailedResponse([], "id is required"), 400
         unit = HeatUserServices.retrieve(id)
