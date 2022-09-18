@@ -11,8 +11,8 @@ class MonthlyEnergyConsumtionServices:
         
 
     @staticmethod
-    def retrieve(month: str) ->MonthlyEnergyConsumtionModel:
-        return MonthlyEnergyConsumtionModel.query.filter_by(month=month).first()
+    def retrieve(month: str,source_id: int) ->MonthlyEnergyConsumtionModel:
+        return MonthlyEnergyConsumtionModel.query.filter_by(month=month, source_id=source_id).first()
 
     @staticmethod
     def retrieve_all() -> list[MonthlyEnergyConsumtionModel]:

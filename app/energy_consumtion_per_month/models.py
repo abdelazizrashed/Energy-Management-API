@@ -1,6 +1,8 @@
 from ..shared.db import db
 from ..energy_units.models import EnergyUnitModel
 from ..energy_sources.models import EnergySourceModel
+from ..energy_sources.services import EnergySourceServices
+from ..energy_units.services import EnergyUnitServices
 
 class MonthlyEnergyConsumtionModel(db.Model):
     __tablename__ = 'MonthlyEnergyConsumtion'
@@ -23,12 +25,14 @@ class MonthlyEnergyConsumtionModel(db.Model):
         self.source_id = source_id
 
     def to_json(self) -> dict:
+        unit = EnergyUnitServices.retrieve(self.unit_id)
+        source = EnergySourceServices.retrieve(self.source_id)
         return {
-            "source_id": self.source_id,
+            "source": source.to_json(),
             "month": self.month,
             "cost":self.cost,
             "usage":self.usage,
-            "unit_id":self.unit_id,
+            "unit":unit.to_json(),
         }
 
     @staticmethod
