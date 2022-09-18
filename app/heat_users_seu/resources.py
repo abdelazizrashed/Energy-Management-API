@@ -43,22 +43,20 @@ class HeatUserResource(Resource):
         return getSuccessResponse(unit.to_json(), "Success"), 200
 
     def put(self):
-
         args = _unit_parser.parse_args()
         id = args["id"]
         if not id:
             return getFailedResponse([], "id is required"), 400
             
-        if len(args.items) == 1:
+        if len(args.items()) == 1:
             return getFailedResponse([], "add some data"), 400
         unit = HeatUserModel.from_json(args)
         unit = HeatUserServices.update(unit)
         return getSuccessResponse(unit.to_json(), "Success"), 200
 
     def delete(self):
-
-        args = _unit_parser.parse_args()
-        id = args["id"]
+        unit_args = request.args
+        id = unit_args.get("id")
         if not id:
             return getFailedResponse([], "id is required"), 400
             
