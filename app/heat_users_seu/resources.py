@@ -36,7 +36,7 @@ class HeatUserResource(Resource):
 
     def post(self):
         args = _unit_parser.parse_args()
-        if len(args.items) == 0:
+        if len(args.items()) == 0:
             return getFailedResponse([], "add some data"), 400
         unit = HeatUserModel.from_json(args)
         unit = HeatUserServices.create(unit)
