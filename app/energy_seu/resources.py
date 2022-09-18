@@ -52,7 +52,7 @@ class EnergySEUResource(Resource):
             return getFailedResponse([], "target is required"), 400
         
         source = EnergySEUServices.retrieve(type)
-        if type:
+        if source:
             return getFailedResponse([], "SEU already exists"), 400
 
         
