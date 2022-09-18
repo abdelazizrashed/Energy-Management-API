@@ -1,8 +1,11 @@
+from multiprocessing.spawn import import_main_path
 from flask_restful import Resource, reqparse, request
 
 from ..shared.helpers.api_helpers import getFailedResponse, getSuccessResponse
 from .services import MonthlyEnergyConsumtionServices
 from .models import MonthlyEnergyConsumtionModel
+from ..energy_sources.services import EnergySourceServices
+from ..energy_units.services import EnergyUnitServices
 
 
 _unit_parser = reqparse.RequestParser()
@@ -52,9 +55,15 @@ class MonthlyEnergyConsumtionResource(Resource):
         unit_id = args["unit_id"]
         if not unit_id:
             return getFailedResponse([], "unit_id is required"), 400
+        unit =  EnergyUnitServices.retrieve(unit_id)
+        if not unit:
+            return getFailedResponse([], f"the unit with unit_id = {unit_id} doesn't exists"), 400
         source_id = args["source_id"]
         if not source_id:
             return getFailedResponse([], "source_id is required"), 400
+        source =  EnergySourceServices.retrieve(source_id)
+        if not source:
+            return getFailedResponse([], f"the source with source_id = {source_id} doesn't exists"), 400
         m = MonthlyEnergyConsumtionServices.retrieve(month, source_id)
         if m: 
             return getFailedResponse([], "element already exists is required"), 400
