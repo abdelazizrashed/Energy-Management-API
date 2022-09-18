@@ -83,11 +83,17 @@ class MonthlyEnergyConsumtionResource(Resource):
 
     def delete(self):
 
-        args = _unit_parser.parse_args()
-        month = args["month"]
+        unit_args = request.args
+        
+        if not unit_args:
+            return getFailedResponse([], "month and source_id are required"), 400
+        month = unit_args.get("month")
         if not month:
             return getFailedResponse([], "month is required"), 400
-        MonthlyEnergyConsumtionServices.delete(MonthlyEnergyConsumtionModel.from_json(args))
+        source_id = unit_args.get("source_id")
+        if not source_id:
+            return getFailedResponse([], "source_id is required"), 400
+        MonthlyEnergyConsumtionServices.delete(month, source_id)
         return getSuccessResponse(month, "Success"), 200
 
 

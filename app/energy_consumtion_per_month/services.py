@@ -27,8 +27,8 @@ class MonthlyEnergyConsumtionServices:
         return driver
 
     @staticmethod
-    def delete(driver: MonthlyEnergyConsumtionModel) -> None:
-        temp_driver = MonthlyEnergyConsumtionServices.retrieve(driver.month)
+    def delete(month: str,source_id: int) -> None:
+        temp_driver = MonthlyEnergyConsumtionServices.retrieve(month, source_id)
         if temp_driver:
             db.session.delete(temp_driver)
             db.session.commit()
