@@ -13,7 +13,7 @@ _source_parser.add_argument("meter_type", type=str)
 _source_parser.add_argument("source_id", type=int)
 _source_parser.add_argument("objective", type=str)
 _source_parser.add_argument("influencer", type=str)
-_source_parser.add_argument("target", type=int)
+_source_parser.add_argument("target", type=float)
 
 
 class EnergySEUResource(Resource):

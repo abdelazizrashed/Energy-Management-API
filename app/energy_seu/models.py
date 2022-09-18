@@ -34,7 +34,7 @@ class EnergySEUModel(db.Model):
             "meter_type": self.meter_type,
             "objective": self.objective,
             "influencer": self.influencer,
-            "target": self.target,
+            "target": str(self.target),
         }
 
     @staticmethod
