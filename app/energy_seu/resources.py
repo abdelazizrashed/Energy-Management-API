@@ -13,16 +13,7 @@ _source_parser.add_argument("meter_type", type=str)
 _source_parser.add_argument("source_id", type=int)
 _source_parser.add_argument("objective", type=str)
 _source_parser.add_argument("influencer", type=str)
-_source_parser.add_argument("target", type=str)
-
-    # main_driver = db.Column(db.String(50), nullable=False)
-    # meter_type = db.Column(db.String(50), nullable=False)
-    # source_id = db.Column(db.Integer, db.ForeignKey(
-    #     f'{EnergyUnitModel.__tablename__}.source_id'), nullable=False)
-    # objective = db.Column(db.String(150), nullable=False)
-    # influencer = db.Column(db.String(150), nullable=False)
-    
-    # target = db.Column(db.Numeric(), nullable=False)
+_source_parser.add_argument("target", type=int)
 
 
 class EnergySEUResource(Resource):
@@ -38,13 +29,13 @@ class EnergySEUResource(Resource):
 
     def post(self):
         args = _source_parser.parse_args()
-        type = args["type"]
-        main_driver = args["main_driver"]
-        meter_type = args["meter_type"]
-        source_id = args["source_id"]
-        objective = args["objective"]
-        influencer = args["influencer"]
-        target = args["target"]
+        type = args.get("type")
+        main_driver = args.get("main_driver")
+        meter_type = args.get("meter_type")
+        source_id = args.get("source_id")
+        objective = args.get("objective")
+        influencer = args.get("influencer")
+        target = args.get("target")
         if not type:
             return getFailedResponse([], "type is required"), 400
         if not main_driver:
