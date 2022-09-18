@@ -27,8 +27,8 @@ class EnergySEUServices:
         return driver
 
     @staticmethod
-    def delete(driver: EnergySEUModel) -> None:
-        temp_driver = EnergySEUServices.retrieve(driver.type)
+    def delete(type: str) -> None:
+        temp_driver = EnergySEUServices.retrieve(type)
         if temp_driver:
             db.session.delete(temp_driver)
             db.session.commit()

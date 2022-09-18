@@ -90,11 +90,11 @@ class EnergySEUResource(Resource):
 
     def delete(self):
 
-        args = _source_parser.parse_args()
-        type = args["type"]
+        source_args = request.args
+        type = source_args.get("type")
         if not type:
             return getFailedResponse([], "type is required"), 400
-        EnergySEUServices.delete(EnergySEUModel.from_json(args))
+        EnergySEUServices.delete(type)
         return getSuccessResponse(type, "Success"), 200
 
 
