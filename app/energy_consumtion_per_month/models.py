@@ -42,10 +42,10 @@ class MonthlyEnergyConsumtionModel(db.Model):
     @staticmethod
     def from_json(data: dict):
         return MonthlyEnergyConsumtionModel(
-            data["id"],
-            data['month'], 
-            data['cost'], 
-            data['usage'], 
-            data['unit_id'],
-            data["source_id"], 
+            data.get("id"),
+            data.get('month'), 
+            data.get('cost'), 
+            data.get('usage'), 
+            data.get('unit_id'),
+            data.get("source_id"), 
             )
